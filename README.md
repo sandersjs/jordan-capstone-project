@@ -28,4 +28,5 @@ That exact plain-text password you put inside the quotes is the one you must typ
 Update Portfolio
 1. Remove the data.json file and add your projects once the app is deployed.
 2. Or add the data.json file to the .gitignore file so that it is not included in your repository.
-   Otherwise it will overwrite any data changes made on the deployed version.
+   Otherwise it will overwrite any data changes made on the deployed version. 
+   test
