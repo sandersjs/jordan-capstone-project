@@ -1,0 +1,41 @@
+body { padding-top: 56px; }
+.card-img-top { transition: transform 0.3s; }
+.card:hover .card-img-top { transform: scale(1.05); }
+.project-description {
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+.project-description h1, .project-description h2, .project-description h3 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.project-description ul, .project-description ol {
+    padding-left: 1.5em;
+    margin: 1em 0;
+}
+
+.project-description img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1em 0;
+}
+
+.project-description pre {
+    background: #f4f4f4;
+    padding: 1em;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+.profile-img {
+    width: 175px;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    filter: blur(.75px);
+}

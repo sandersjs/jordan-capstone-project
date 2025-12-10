@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<h2>Portfolio Configuration</h2>
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-4 p-4 border rounded bg-dark text-white">
+            <label class="form-label fw-bold">Profile Image <span class="text-danger">*</span></label>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label d-block text-center" style="cursor: pointer;">
+                        <div class="border rounded p-4 bg-light text-dark text-center">
+                            <i class="bi bi-cloud-upload fs-1 text-primary"></i><br>
+                            <span class="fw-bold">Click to upload from device</span>
+                        </div>
+                        <input type="file" name="image_file" id="image_file" accept="image/*" class="form-control mt-2">
+                    </label>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">OR paste image URL</label>
+                    <input type="url" name="profile_image_url" id="profile_image_url" class="form-control" 
+                           placeholder="https://example.com/image.jpg">
+                    <small class="text-white-50">Direct link (JPG, PNG, GIF, WebP)</small>
+                </div>
+            </div>
+            <small class="text-white-50 d-block mt-2">You must provide either an uploaded profile image or a URL.</small>
+        </div>
+    <div class="mb-3">
+        <label>Your Name</label>
+        <input type="text" name="name" class="form-control" value="{{ config.name }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Course Number</label>
+        <input type="text" name="course_number" class="form-control" value="{{ config.course_number }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Course Description</label>
+        <input type="text" name="course_description" class="form-control" value="{{ config.course_description }}" required>
+    </div>
+    <div class="mb-3">
+        <label>LinkedIn URL</label>
+        <input type="text" name="linkedin" class="form-control" value="{{ config.linkedin }}" required>
+    </div>
+    <div class="mb-3">
+    <label for="theme" class="form-label">Theme</label>
+    <div class="row">
+        {% set themes = [
+            {'name': 'quartz', 'color': '0d6efd', 'selected': config.theme == 'quartz'},
+            {'name': 'vapor', 'color': '198754', 'selected': config.theme == 'vapor'},
+            {'name': 'darkly', 'color': '212529', 'selected': config.theme == 'darkly'},
+            {'name': 'minty', 'color': '0dcaf0', 'selected': config.theme == 'minty'},
+            {'name': 'yeti', 'color': 'ffc107', 'selected': config.theme == 'yeti'},
+            {'name': 'journal', 'color': '6f42c1', 'selected': config.theme == 'journal'},
+            {'name': 'lux', 'color': 'fd7e14', 'selected': config.theme == 'lux'},
+            {'name': 'solar', 'color': 'dc3545', 'selected': config.theme == 'solar'}
+        ] %}
+        {% for theme in themes %}
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <img src="https://dummyimage.com/150x100/{{ theme.color }}/ffffff&text={{ theme.name.title() }}" class="card-img-top" alt="{{ theme.name }} preview" style="height: 100px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <label class="form-check-label">
+                        <input type="radio" name="theme" value="{{ theme.name }}" class="form-check-input" {% if theme.selected %}checked{% endif %}>
+                        {{ theme.name.title() }}
+                    </label>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+    <div class="mb-3">
+        <label>Profile Information</label>
+        <textarea name="profile_info" class="form-control" rows="4">{{ config.profile_info }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-success mb-3">Save Configuration</button>
+</form>
+{% endblock %}

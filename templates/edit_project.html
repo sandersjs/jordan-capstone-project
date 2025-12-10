@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Edit Project{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Edit Project</h2>
+        <form action="{{ url_for('delete_project', project_id=project.id) }}" method="POST" 
+              onsubmit="return confirm('Are you sure you want to delete this project? This cannot be undone.');">
+            <button type="submit" class="btn btn-outline-danger">
+                <i class="bi bi-trash"></i> Delete Project
+            </button>
+        </form>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="mb-4 p-4 border rounded bg-dark text-white">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <label class="form-label d-block text-white-50">Current Image</label>
+                    <img src="{{ project.image }}" alt="Current Project Image" 
+                         class="img-thumbnail" style="max-height: 150px; object-fit: cover;">
+                </div>
+
+                <div class="col-md-8">
+                    <label class="form-label fw-bold text-warning">Change Image (Optional)</label>
+                    
+                    <div class="mb-3">
+                        <label class="form-label small">Upload new file</label>
+                        <input type="file" name="image_file" accept="image/*" class="form-control">
+                    </div>
+                    
+                    <div class="mb-0">
+                        <label class="form-label small">OR paste new URL</label>
+                        <input type="url" name="image_url" class="form-control" 
+                               placeholder="Leave empty to keep current image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Title <span class="text-danger">*</span></label>
+            <input type="text" name="title" class="form-control form-control-lg" 
+                   value="{{ project.title }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Website URL <span class="text-danger">*</span></label>
+            <input type="url" name="website_url" class="form-control" 
+                   value="{{ project.website_url }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">GitHub URL <span class="text-danger">*</span></label>
+            <input type="url" name="github_url" class="form-control" 
+                   value="{{ project.github_url }}" required>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label fw-bold">Description <span class="text-danger">*</span></label>
+            
+            <textarea name="description" id="description-editor" class="form-control" rows="12">{{ plain_description or project.description }}</textarea>
+
+            <div class="mt-2">
+                <small>
+                    Characters: <span id="charCount" style="font-weight:bold; color:#198754;">0</span>
+                    <span id="charWarning" class="text-danger" style="display:none; font-weight:bold;"> (minimum 100 required)</span>
+                </small>
+            </div>
+        </div>
+
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="bi bi-save"></i> Save Changes
+            </button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

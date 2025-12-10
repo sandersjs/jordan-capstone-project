@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Add Project{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Add New Project</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <!-- IMAGE SECTION -->
+        <div class="mb-4 p-4 border rounded bg-dark text-white">
+            <label class="form-label fw-bold">Project Image <span class="text-danger">*</span></label>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label d-block text-center" style="cursor: pointer;">
+                        <div class="border rounded p-4 bg-light text-dark text-center">
+                            <i class="bi bi-cloud-upload fs-1 text-primary"></i><br>
+                            <span class="fw-bold">Click to upload from device</span>
+                        </div>
+                        <input type="file" name="image_file" id="image_file" accept="image/*" class="form-control mt-2">
+                    </label>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">OR paste image URL</label>
+                    <input type="url" name="image_url" id="image_url" class="form-control" 
+                           placeholder="https://example.com/image.jpg">
+                    <small class="text-white-50">Direct link (JPG, PNG, GIF, WebP)</small>
+                </div>
+            </div>
+            <small class="text-white-50 d-block mt-2">You must provide either an uploaded image or a URL.</small>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Title <span class="text-danger">*</span></label>
+            <input type="text" name="title" id="title" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Website URL <span class="text-danger">*</span></label>
+            <input type="url" name="website_url" id="website_url" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">GitHub URL <span class="text-danger">*</span></label>
+            <input type="url" name="github_url" id="github_url" class="form-control" required>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label fw-bold">
+                Description <span class="text-danger">*</span>
+                <small class="text-muted ms-2">(minimum 100 characters)</small>
+            </label>
+            <textarea name="description" id="description-editor" class="form-control" rows="12"></textarea>
+
+            <div class="mt-2 text-end">
+                <small>
+                    Characters: <span id="charCount" class="fw-bold text-success">0</span>
+                    <span id="charWarning" class="text-danger fw-bold" style="display:none;">
+                        ⚠️ Minimum 100 characters required
+                    </span>
+                </small>
+            </div>
+        </div>
+
+        <div class="d-flex gap-3">
+            <button type="submit" id="submitBtn" class="btn btn-success btn-lg px-5" disabled>
+                <i class="bi bi-check-circle me-2"></i>Add Project
+            </button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

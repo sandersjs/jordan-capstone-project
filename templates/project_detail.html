@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} - My Portfolio{% endblock %}
+
+{% block content %}
+
+<div class="container py-2">
+    <div class="row justify-content-center">
+        <div class="col-lg-9 col-xl-8">
+
+            <!-- Main Project Card -->
+            <div class="card shadow-lg border-0 text-bg-light overflow-hidden">
+                
+                <!-- Project Image -->
+                <img src="{{ project.image }}" 
+                     class="card-img-top" 
+                     alt="{{ project.title }}" 
+                     style="height: 400px; object-fit: cover; border-bottom: 6px solid #198754;">
+
+                <div class="card-body p-5">
+
+                    <!-- Title -->
+                    <h1 class="display-5 fw-bold mb-4">{{ project.title }}</h1>
+
+                    <!-- Rich Text Description (WYSIWYG) -->
+                    <div class="project-description lead fs-5" style="line-height: 1.6;">
+                        {{ project.description | safe }}
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-5 pt-4 border-top">
+                        <div class="d-flex flex-wrap gap-3 align-items-center">
+                            {% if project.website_url %}
+                            <a href="{{ project.website_url }}" target="_blank" rel="noopener" 
+                               class="btn btn-success btn-lg px-4">
+                                <i class="bi bi-globe me-2"></i>Visit Live Site
+                            </a>
+                            {% endif %}
+
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" rel="noopener" 
+                               class="btn btn-dark btn-lg px-4">
+                                <i class="bi bi-github me-2"></i>View on GitHub
+                            </a>
+                            {% endif %}
+
+                            <div class="ms-auto">
+                                <a href="{{ url_for('edit_project', project_id=project.id) }}" 
+                                   class="btn btn-outline-primary btn-lg">
+                                    <i class="bi bi-pencil-square me-2"></i>Edit Project
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center mt-4">
+                <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg px-5">
+                    <i class="bi bi-arrow-left me-2"></i> Back to Portfolio
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Extra Styling for Rich Text Content -->
+{% block extra_css %}
+<style>
+    .project-description {
+        color: #212529;
+    }
+    .project-description h1, .project-description h2, .project-description h3 {
+        margin-top: 1.8em;
+        margin-bottom: 0.8em;
+        color: #198754;
+        font-weight: 600;
+    }
+    .project-description h1 { font-size: 2.2rem; }
+    .project-description h2 { font-size: 1.8rem; }
+    .project-description h3 { font-size: 1.5rem; }
+
+    .project-description p {
+        margin-bottom: 1.3em;
+    }
+
+    .project-description ul, .project-description ol {
+        padding-left: 1.5rem;
+        margin: 1.2em 0;
+    }
+
+    .project-description li {
+        margin-bottom: 0.4em;
+    }
+
+    .project-description blockquote {
+        border-left: 4px solid #198754;
+        padding-left: 1.2em;
+        font-style: italic;
+        color: #555;
+        margin: 2em 0;
+    }
+
+    .project-description pre {
+        background: #f8f9fa;
+        padding: 1em;
+        border-radius: 8px;
+        overflow-x: auto;
+        border: 1px solid #dee2e6;
+    }
+
+    .project-description code {
+        background: #f1f1f1;
+        padding: 0.2em 0.4em;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+
+    .project-description img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin: 1.5em 0;
+    }
+
+    .project-description a {
+        color: #198754;
+        text-decoration: underline;
+        font-weight: 500;
+    }
+
+    .project-description a:hover {
+        color: #146c43;
+    }
+</style>
+{% endblock %}

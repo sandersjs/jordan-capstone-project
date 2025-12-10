@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Home - My Portfolio{% endblock %}
+
+{% block content %}
+
+<div class="p-5 mb-3 text-bg-dark rounded-3 shadow py-4">
+    <div class="row">
+        <div class="col-8">
+            <div class="row">
+                <div class="col-12 display-4 fw-bold">Capstone Project</div>
+                <div class="col-12 my-2 display-6 text-info">{{ config.name }}</div>
+                <div class="col-12 lead">
+                 <strong class="text-light">{{ config.course_number }}</strong> - {{ config.course_description }}
+                </div>
+            </div>
+        </div>
+        <div class="col-4"><img src={{config.profile_image}} 
+                         class="profile-img" 
+                         alt="{{ config.name }}" 
+                         >
+        
+        </div>
+    </div>
+    
+    
+    
+    <hr class="my-2 bg-light border-light opacity-25">
+    <p class="mb-2">{{ config.profile_info }}</p>
+    
+    {% if session.get('authenticated') %}
+        <a href="{{ url_for('add_project') }}" class="btn btn-success btn-lg mb-0">
+            <i class="bi bi-plus-circle"></i> Add New Project
+        </a>
+    {% endif %}
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 mb-4 g-4">
+    {% if projects %}
+        {% for project in projects %}
+        <div class="col">
+            <div class="card h-100 shadow-sm hover-shadow transition border-0 rounded-5">
+                <a href="{{ url_for('project_detail', project_id=project.id) }}">
+                    <img src="{{ project.image }}" 
+                         class="card-img-top rounded-top" 
+                         alt="{{ project.title }}" 
+                         style="height: 220px; object-fit: cover;">
+                </a>
+
+                <div class="card-body d-flex flex-column rounded-5">
+                    <h5 class="card-title mb-3">
+                        <a href="{{ url_for('project_detail', project_id=project.id) }}" 
+                           class="text-decoration-none text-dark fw-bold stretched-link">
+                            {{ project.title }}
+                        </a>
+                    </h5>
+
+                    <div class="card-text text-muted flex-grow-1">
+                        {{ project.description | striptags | truncate(100) }}
+                    </div>
+
+                    <div class="mt-4 d-flex justify-content-between align-items-center" style="position: relative; z-index: 2;">
+                        <a href="{{ url_for('project_detail', project_id=project.id) }}" 
+                           class="btn btn-sm btn-outline-primary">
+                            View Project
+                        </a>
+                        
+                        {% if session.get('authenticated') %}
+                        <a href="{{ url_for('edit_project', project_id=project.id) }}" 
+                           class="btn btn-sm btn-warning text-dark" title="Edit">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12 text-center py-5">
+            <div class="alert alert-secondary d-inline-block p-5">
+                <i class="bi bi-folder2-open display-1 mb-3 d-block"></i>
+                <h4 class="alert-heading">No projects yet!</h4>
+                <p class="mb-4">Your portfolio is currently empty.</p>
+                {% if session.get('authenticated') %}
+                    <a href="{{ url_for('add_project') }}" class="btn btn-success">
+                        <i class="bi bi-plus-circle"></i> Add Your First Project
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-in-right"></i> Login to Add Projects
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Custom Hover Effect */
+    .hover-shadow {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+    }
+</style>
+{% endblock %}
